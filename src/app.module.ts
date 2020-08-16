@@ -7,19 +7,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [
-        'api.env.development',
-        'api.env.staging',
-        'api.env.production',
-      ],
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'),
-      }),
-      inject: [ConfigService],
-    }),
+    // MongooseModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     uri: configService.get<string>('MONGODB_URI'),
+    //   }),
+    //   inject: [ConfigService],
+    // }),
   ],
   controllers: [AppController],
   providers: [AppService],
