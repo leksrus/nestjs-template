@@ -27,12 +27,12 @@ export class ClientsController {
 
   @Post()
   public async post(@Body() clientDTO: ClientDto): Promise<Client> {
-    return await this._clientService.create(clientDTO);
+    return await this._clientService.createClient(clientDTO);
   }
 
   @Put(':id')
   public async put(@Param('id') id: string, @Body() clientDTO: ClientDto): Promise<Client> {
-    const client = await this._clientService.update(id, clientDTO);
+    const client = await this._clientService.updateClient(id, clientDTO);
 
     if (!client) throw new HttpException('No client found to update', HttpStatus.NOT_FOUND);
 
@@ -41,7 +41,7 @@ export class ClientsController {
 
   @Delete(':id')
   public async delete(@Param('id') id: string): Promise<Client> {
-    const client = await this._clientService.delete(id);
+    const client = await this._clientService.deleteClient(id);
 
     if (!client) throw new HttpException('No client found to delete', HttpStatus.NOT_FOUND);
 
