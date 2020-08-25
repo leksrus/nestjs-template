@@ -6,7 +6,7 @@ import { ClientDto } from '../dto/client.dto';
 
 @Injectable()
 export class ClientsService {
-  constructor(@InjectModel('Client') private _client: Model<Client>) {}
+  constructor(@InjectModel(Client.name) private _client: Model<Client>) {}
 
   public async getAllClients(): Promise<Client[]> {
     try {
@@ -37,9 +37,9 @@ export class ClientsService {
     }
   }
 
-  public async updateClient(id: string, clientDto: ClientDto): Promise<Client> {
+  public async updateClient(id: string, clientDto: ClientDto, isWithReplace: boolean): Promise<Client> {
     try {
-      return await this._client.findByIdAndUpdate(id, clientDto, { new: true }).exec();
+      return await this._client.findByIdAndUpdate(id, clientDto, { new: isWithReplace }).exec();
     } catch (error) {
       console.log(error);
       throw error;

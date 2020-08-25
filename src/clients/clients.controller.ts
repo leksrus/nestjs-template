@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, HttpException, HttpStatus, Patch } from '@nestjs/common';
 import { ClientsService } from './services/clients.service';
 import { Client } from './schemas/client.schema';
 import { ClientDto } from './dto/client.dto';
@@ -32,11 +32,12 @@ export class ClientsController {
 
   @Put(':id')
   public async put(@Param('id') id: string, @Body() clientDTO: ClientDto): Promise<Client> {
-    const client = await this._clientService.updateClient(id, clientDTO);
+    return await this._clientService.updateClient(id, clientDTO, true);
+  }
 
-    if (!client) throw new HttpException('No client found to update', HttpStatus.NOT_FOUND);
-
-    return client;
+  @Patch(':id')
+  public async patch(@Param('id') id: string, @Body() clientDTO: ClientDto): Promise<Client> {
+    return await this._clientService.updateClient(id, clientDTO, false);
   }
 
   @Delete(':id')

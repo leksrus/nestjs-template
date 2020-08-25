@@ -18,16 +18,24 @@ describe('ClientsService', () => {
     async find(): Promise<void> {
       return;
     },
+    async findByIdAndUpdate(): Promise<void> {
+      return;
+    },
+    async findByIdAndDelete(): Promise<void> {
+      return;
+    },
   };
 
   beforeAll(async () => {
     mockClientModel.find = jest.fn().mockImplementation(() => ({ exec: jest.fn().mockResolvedValue(mockClients) }));
     mockClientModel.findById = jest.fn().mockImplementation(() => ({ exec: jest.fn().mockResolvedValue(mockClient) }));
+    mockClientModel.findByIdAndUpdate = jest.fn().mockImplementation(() => ({ exec: jest.fn().mockResolvedValue(mockClient) }));
+    mockClientModel.findByIdAndDelete = jest.fn().mockImplementation(() => ({ exec: jest.fn().mockResolvedValue(mockClient) }));
   });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ClientsService, { provide: getModelToken('Client'), useValue: mockClientModel }],
+      providers: [ClientsService, { provide: getModelToken(Client.name), useValue: mockClientModel }],
     }).compile();
 
     clientService = module.get<ClientsService>(ClientsService);
@@ -39,84 +47,21 @@ describe('ClientsService', () => {
     });
   });
 
-  // describe('getAll', () => {
-  //   it('should return httpExeption: http status code no content with message no clients if clients is empty', async () => {
-  //     jest.spyOn(clientService, 'getAllClients').mockImplementation(async () => emptyClients);
-  //     const httpExp = new HttpException('No clients', HttpStatus.NO_CONTENT);
-  //     try {
-  //       await clientController.getAll();
-  //     } catch (error) {
-  //       expect(error).toMatchObject(httpExp);
-  //     }
-  //   });
-  // });
+  describe('getClient', () => {
+    it('service should return a client searched by client id', async () => {
+      expect(await clientService.getClient(clientId)).toBe(mockClient);
+    });
+  });
 
-  // describe('get', () => {
-  //   it('should return a client', async () => {
-  //     jest.spyOn(clientService, 'getClient').mockImplementation(async () => client);
+  describe('updateClient', () => {
+    it('service should recive a client id return udated client', async () => {
+      expect(await clientService.updateClient(clientId, clientDto, false)).toBe(mockClient);
+    });
+  });
 
-  //     expect(await clientController.get(clientId)).toBe(client);
-  //   });
-  // });
-
-  // describe('get', () => {
-  //   it('should return httpExeption: http status code not found with message no client found', async () => {
-  //     jest.spyOn(clientService, 'getClient').mockImplementation(async () => emptyClient);
-  //     const httpExp = new HttpException('No client found', HttpStatus.NOT_FOUND);
-
-  //     try {
-  //       await clientController.get(clientId);
-  //     } catch (error) {
-  //       expect(error).toMatchObject(httpExp);
-  //     }
-  //   });
-  // });
-
-  // describe('post', () => {
-  //   it('should return recently created client', async () => {
-  //     jest.spyOn(clientService, 'create').mockImplementation(async () => client);
-
-  //     expect(await clientController.post(clientDto)).toBe(client);
-  //   });
-  // });
-
-  // describe('put', () => {
-  //   it('should return recently updated client', async () => {
-  //     jest.spyOn(clientService, 'update').mockImplementation(async () => client);
-
-  //     expect(await clientController.put(clientId, clientDto)).toBe(client);
-  //   });
-  // });
-
-  // describe('put', () => {
-  //   it('should return httpExeption: http status code not found with message no client found to update', async () => {
-  //     jest.spyOn(clientService, 'update').mockImplementation(async () => emptyClient);
-  //     const httpExp = new HttpException('No client found to update', HttpStatus.NOT_FOUND);
-  //     try {
-  //       await clientController.put(clientId, clientDto);
-  //     } catch (error) {
-  //       expect(error).toMatchObject(httpExp);
-  //     }
-  //   });
-  // });
-
-  // describe('delete', () => {
-  //   it('should return recently deleted client', async () => {
-  //     jest.spyOn(clientService, 'delete').mockImplementation(async () => client);
-
-  //     expect(await clientController.delete(clientId)).toBe(client);
-  //   });
-  // });
-
-  // describe('delete', () => {
-  //   it('should return httpExeption: http status code not found with message no client found to delete', async () => {
-  //     jest.spyOn(clientService, 'delete').mockImplementation(async () => emptyClient);
-  //     const httpExp = new HttpException('No client found to delete', HttpStatus.NOT_FOUND);
-  //     try {
-  //       await clientController.delete(clientId);
-  //     } catch (error) {
-  //       expect(error).toMatchObject(httpExp);
-  //     }
-  //   });
-  // });
+  describe('deleteClient', () => {
+    it('service should recive a client id and return deleted client', async () => {
+      expect(await clientService.deleteClient(clientId)).toBe(mockClient);
+    });
+  });
 });

@@ -14,6 +14,7 @@ import { ClientsModule } from './clients/clients.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
+        useFindAndModify: false,
       }),
       inject: [ConfigService],
     }),
