@@ -1,13 +1,18 @@
-FROM node:12.13
+FROM node:12.13-alpine
 
-COPY ["package.json", "package-lock.json", "/usr/src/"]
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-WORKDIR /usr/src
+COPY ["package.json", "package-lock.json", "/usr/src/app/"]
 
 RUN npm install 
 
-COPY [".", "/usr/src/"]
+COPY [".", "/usr/src/app/"]
 
-EXPOSE 3000
+ARG NODE_ENV
+ARG PORT
+ENV NODE_ENV=${NODE_ENV}
+
+EXPOSE ${PORT}
 
 CMD ["npm", "start"]

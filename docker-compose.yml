@@ -1,17 +1,18 @@
-version: "3"
+version: '3'
 
 services:
-        app:
-                build: .
-                depends_on:
-                        - mongo
-                ports:
-                        - 3000:3000
-                env_file:
-                        - api.env.production
-                environment:
-                        - NODE_ENV=production
-        mongo:
-                image: mongo
-                ports:
-                        - 27017:27017               
+  app:
+    build: .
+    depends_on:
+      - mongo
+    env_file:
+      - .env.staging
+    environment:
+      - NODE_ENV=staging
+      - PORT=8000
+    ports:
+      - 8000:8000
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
