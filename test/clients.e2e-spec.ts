@@ -1,13 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
-import { ClientsModule } from './../src/clients/clients.module';
-import { ClientsService } from './../src/clients/services/clients.service';
-import { ClientDto } from './../src/clients/dto/client.dto';
+import { ClientsModule } from '../src/clients/clients.module';
+import { ClientDto } from '../src/clients/dto/client.dto';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { Client } from './../src/clients/schemas/client.schema';
+import { Client } from '../src/clients/schemas/client.schema';
 import { Model, Mongoose } from 'mongoose';
 
 describe('ClientsController (e2e)', () => {

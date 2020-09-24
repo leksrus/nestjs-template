@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ClientsService } from './clients.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Client } from './../schemas/client.schema';
-import { ClientDto } from './../dto/client.dto';
+import { ClientDto } from './../dtos/client.dto';
 
 describe('ClientsService', () => {
   let clientService: ClientsService;
